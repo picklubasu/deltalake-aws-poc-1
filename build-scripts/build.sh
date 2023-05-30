@@ -11,7 +11,7 @@
 # Be sure your are logged in to AWS, as this script uploads to S3.
 
 build_application() {
-	sam build --template-file ${TEMPLATE_PATH}
+	sam build --template-file ${BUILD_TEMPLATE_PATH}
 }
 
 package_application() {
@@ -22,7 +22,7 @@ package_application() {
 package_deploy() {
 	#sam deploy --template-file ${CODEBUILD_SRC_DIR}/template.yml --stack-name llypharma-data-execution --parameter-overrides "$(jq -j 'to_entries[] | "\(.key)='\\\"'\(.value)'\\\"''\ '"' params.json)"
 	#SAM_PARAMETERS=$( cat ${CODEBUILD_SRC_DIR}/param.json | jq -r ' .Parameters | to_entries[] | "\(.key)='\\\"'\(.value)'\\\"''\ '"' )
-	sam deploy --template-file ${CODEBUILD_SRC_DIR}/${TEMPLATE_PATH} --stack-name deltalake-aws-poc-build-stack
+	sam deploy --template-file ${CODEBUILD_SRC_DIR}/${BUILD_TEMPLATE_PATH} --stack-name deltalake-aws-poc-build-stack
 }
 
 echo "Starting build - $(date)"
