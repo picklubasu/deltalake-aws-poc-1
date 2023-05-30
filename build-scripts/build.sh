@@ -26,6 +26,7 @@ package_deploy() {
 }
 
 echo "Starting build - $(date)"
+STARTING_DIR=$PWD
 set -xe
 build_application
 #package_application
