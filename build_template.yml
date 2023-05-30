@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: CloudFormation template to create build resource stack.
+Resources:
+  rawtostageload:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: usv-raw-to-stage-load
+      Description:
+      Role: 'arn:aws:iam::345814638087:role/IAM-GLUE-SERVICE'
+      GlueVersion:  '2.0'
+      WorkerType: 'Standard'
+      NumberOfWorkers:  2
+      ExecutionProperty:
+        MaxConcurrentRuns: 1
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation:
+          Fn::Sub: 's3://s3-ftp-source/code/code.py'
+      DefaultArguments:
+        "--bucket": "s3-ftp-source"
+  stagetocurationload:
+    Type: AWS::Glue::Job
+      Properties:
+        Name: usv-stage-to-curation-load
+        Description: 
+        Role: 'arn:aws:iam::345814638087:role/IAM-GLUE-SERVICE'
+        GlueVersion:  '2.0'
+        WorkerType: 'Standard'
+        NumberOfWorkers:  2
+        ExecutionProperty:
+          MaxConcurrentRuns: 1
+        Command:
+          Name: glueetl
+          PythonVersion: '3'
+          ScriptLocation:
+          Fn::Sub: 's3://s3-ftp-source/code/code.py'
+        DefaultArguments:
+          "--bucket": "s3-ftp-source"

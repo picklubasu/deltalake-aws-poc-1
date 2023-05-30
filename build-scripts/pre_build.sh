@@ -6,7 +6,7 @@ build_application() {
 
 package_application() {
 	### YOU MUST SPECIFY A KMS KEY TO USE WHEN PACKAGING YOUR TEMPLATE ###
-	sam package --template-file .aws-sam/build/template.yaml --kms-key-id alias/aws/s3 --s3-bucket ${S3_DEPLOY_BUCKET} --output-template-file ${TEMPLATE_PATH}
+	sam package --template-file .aws-sam/build/prebuild_template.yaml --kms-key-id alias/aws/s3 --s3-bucket ${S3_DEPLOY_BUCKET} --output-template-file ${TEMPLATE_PATH}
 }
 
 package_deploy() {
@@ -38,4 +38,4 @@ STARTING_DIR=$PWD
 set -xe
 build_application
 package_deploy
-echo "Completed build - $(date)"
+echo "Completed pre_build - $(date)"
